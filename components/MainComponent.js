@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import Home from './HomeComponent';
 import Directory from './DirectoryComponent';
 import CampsiteInfo from './CampsiteInfoComponent';
-import { View } from 'react-native';
 import { CAMPSITES } from '../shared/campsites';
 import Constants from 'expo-constants';
 import { View, Platform } from 'react-native';
@@ -25,6 +25,33 @@ const DirectoryNavigator = createStackNavigator(
                 color: '#fff'
             }
         }
+    }
+);
+
+const HomeNavigator = createStackNavigator(
+    {
+        Home: { screen: Home }
+    },
+    {
+        defaultNavigationOptions: {
+            headerStyle: {
+                backgroundColor: '#5637DD'
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                color: '#fff'
+            }
+        }
+    }
+);
+
+const MainNavigator = createDrawerNavigator(
+    {
+        Home: { screen: HomeNavigator },
+        Directory: { screen: DirectoryNavigator }
+    },
+    {
+        drawerBackgroundColor: '#CEC8FF'
     }
 );
 
