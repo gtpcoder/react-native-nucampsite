@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, FlatList } from 'react-native';
+import { Text, View, ScrollView, Picker, FlatList } from 'react-native';
 import { Card, Icon } from 'react-native-elements';
 import { CAMPSITES } from '../shared/campsites';
 import { COMMENTS } from '../shared/comments';
@@ -10,16 +10,15 @@ function RenderComments({comments}) {
         return (
             <View style={{margin: 10}}>
                 <Text style={{fontSize: 14}}>{item.text}</Text>
-                <Text style={{fontSize: 12}}>{item.rating} Stars</Text>
+                <Text style={{fontSize: 12}}>{'🌟'.repeat(item.rating) + ' Stars'}</Text>
                 <Text style={{fontSize: 12}}>{`-- ${item.author}, ${item.date}`}</Text>
             </View>
         );
     };
-
-    return (
+   return (
         <Card title='Comments'>
             <FlatList
-                data={comments}
+                data={comments.sort((a, b) => (a.date < b.date) ? 1 : -1)}
                 renderItem={renderCommentItem}
                 keyExtractor={item => item.id.toString()}
             />
@@ -27,7 +26,7 @@ function RenderComments({comments}) {
     );
 }
 
-function RenderCampsite({campsite}) {
+function RenderCampsite(props) {
 
     const {campsite} = props;
 
@@ -47,7 +46,8 @@ function RenderCampsite({campsite}) {
                     raised
                     reverse
                     onPress={() => props.favorite ? 
-                        console.log('Already set as a favorite') : props.markFavorite()}
+                        props.markFavorite() //console.log('Already set as a favorite') 
+                        : props.markFavorite()}
                 />  
             </Card>
         );
@@ -62,11 +62,12 @@ class CampsiteInfo extends Component {
         this.state = {
             campsites: CAMPSITES,
             comments: COMMENTS,
-            favorite: false
+            favorite: false,
+            sortBy: "oldest"
         };
     }
     markFavorite() {
-        this.setState({favorite: true});
+        this.setState({favorite: (this.state.favorite ? false : true)});
     }
     static navigationOptions = {
         title: 'Campsite Information'
