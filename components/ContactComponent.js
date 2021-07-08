@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView, Pressable, Linking } from 'react-native';
 import { Card, CardItem } from 'react-native-elements';
+import * as Animatable from 'react-native-animatable';
 
 
 class Contact extends Component {
@@ -16,7 +17,7 @@ class Contact extends Component {
     render() {
         return (
             <ScrollView>
-                <View>
+            <Animatable.View animation='fadeInDown' duration={2000} delay={1000}>
                     <Card
                         title = 'Contact Information'
                         wrapperStyle={{margin: 20}}
@@ -29,7 +30,7 @@ class Contact extends Component {
                             <Text  onPress={()=>{Linking.openURL('mailto:campsites@nucamp.co');}} >Email: campsites@nucamp.co</Text>
 
                     </Card>
-            </View>
+                </Animatable.View>
 
             </ScrollView>
         );
